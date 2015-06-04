@@ -1,0 +1,30 @@
+{
+  "name": "statum",
+  "description": "Simple state machines",
+  "homepage": "https://github.com/krambuhl/statum",
+  "version": "0.1.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "tape tests/*.js | tap-spec"
+  },
+  "keywords": [
+    "state",
+    "states",
+    "state machines",
+    "fsm",
+    "finite-state machines"
+  ],
+  "authors": [
+    "Evan Krambuhl <thekrambuhl@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:krambuhl/statum.git"
+  },
+  "devDependencies": {
+    "functional-predicates": "^0.1.0",
+    "tap-spec": "^2.1.2",
+    "tape": "^3.0.3"
+  }
+}
