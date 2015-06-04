@@ -1,14 +1,14 @@
 # Statum
 
+Simple state machines
+
 ```js
-var komposit = require('komposit');
-var grab = require('date-grab');
-var is = require('functional-predicates');
+var Statum = require('statum');
 
 var time = new Statum(function() { return new Date(); });
 setInterval(time.refresh, 1000);
 
-var isAfterNoon = komposit(grab('hours'), is.lt(12));
+function isAfterNoon(time) { return time.getHours() > 12; }
 
 time
   .change(isAfterNoon, function() { })
@@ -22,4 +22,6 @@ time.state(isAfterNoon, {
 });
 
 time.state(isAfterNoon, function() {}, function() {});
+
+time.off(isAfterNoon);
 ```
