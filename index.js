@@ -56,12 +56,12 @@ Statum.prototype = {
   enter: function(cond, cb) { this.state(cond, { enter: cb }); },
   exit: function(cond, cb) { this.state(cond, { exit: cb }); },
   off: function(cond, cb) {
-    this._states = this._states.filter(function(state) {
-      return !eq(state.cond, cond) && !eq(state.cb, cb);
-    });
+    this._states = arguments.length > 0 ? this._states.filter(function(state) {
+      return cb !== undefined ? !(state.cond === cond && state.cb === cb) : state.cond !== cond;
+    }) : [];
   }
 };
 
-function eq(state, loc) { return loc !== undefined && state === loc; }
+
 
 module.exports = Statum;

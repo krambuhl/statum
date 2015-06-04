@@ -152,6 +152,29 @@ test('state.state(condition, enter, exit)', function (t) {
 
 
 test('state.off(condition, cb)', function (t) {
+  t.plan(2);
+
+  var size = { width: 90 };
+  var width = new Statum(function() { return size.width; });
+
+  var counter = 0;
+  var isLt100 = is.lt(100);
+  var count = function() { counter++; };
+  var count2 = function() { counter++; };
+
+  width.change(isLt100, count);
+  width.change(isLt100, count2);
+  t.equal(counter, 2);
+  width.off(isLt100, count);
+
+  size.width = 110; width.refresh();
+  size.width = 90; width.refresh();
+
+  t.equal(counter, 4);
+});
+
+
+test('state.off(condition)', function (t) {
   t.plan(1);
 
   var size = { width: 90 };
@@ -160,12 +183,36 @@ test('state.off(condition, cb)', function (t) {
   var counter = 0;
   var isLt100 = is.lt(100);
   var count = function() { counter++; };
+  var count2 = function() { counter++; };
 
   width.change(isLt100, count);
-  width.off(isLt100, count);
+  width.change(isLt100, count2);
+  width.off(isLt100);
 
   size.width = 110; width.refresh();
   size.width = 90; width.refresh();
 
-  t.equal(counter, 1);
+  t.equal(counter, 2);
+});
+
+
+test('state.off()', function (t) {
+  t.plan(1);
+
+  var size = { width: 90 };
+  var width = new Statum(function() { return size.width; });
+
+  var counter = 0;
+  var isLt100 = is.lt(100);
+  var count = function() { counter++; };
+  var count2 = function() { counter++; };
+
+  width.change(isLt100, count);
+  width.change(isLt100, count2);
+  width.off();
+
+  size.width = 110; width.refresh();
+  size.width = 90; width.refresh();
+
+  t.equal(counter, 2);
 });
