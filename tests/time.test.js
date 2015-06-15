@@ -13,6 +13,14 @@ test('new Statum(function)', function (t) {
   t.equal(index.value, 1);
 });
 
+test('new Statum(function, undefined)', function (t) {
+  t.plan(1);
+
+  var name = new Statum(function() { return this; }, undefined);
+
+  t.equal(name.value, name);
+});
+
 test('new Statum(function, context)', function (t) {
   t.plan(1);
 

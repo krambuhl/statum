@@ -6,8 +6,14 @@ function Statum(refresher, ctx) {
 }
 
 Statum.prototype = {
-  setRefresher: function(ref) { this.refresher = ref; },
-  setContext: function(ctx) { this.context = ctx; },
+  setRefresher: function(ref) { 
+    this.refresher = ref; 
+  },
+
+  setContext: function(ctx) {
+    this.context = ctx !== undefined ? ctx : this;
+  },
+
   refresh: function() {
     this.prevValue = this.value;
     this.value = this.refresher.call(this.context);
@@ -55,6 +61,7 @@ Statum.prototype = {
   change: function(cond, cb) { this.state(cond, { change: cb }); },
   enter: function(cond, cb) { this.state(cond, { enter: cb }); },
   exit: function(cond, cb) { this.state(cond, { exit: cb }); },
+  
   off: function(cond, cb) {
     this._states = arguments.length > 0 ? this._states.filter(function(state) {
       return cb !== undefined ? !(state.cond === cond && state.cb === cb) : state.cond !== cond;
