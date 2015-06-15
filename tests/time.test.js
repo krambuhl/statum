@@ -142,6 +142,23 @@ test('state.state(condition, { change })', function (t) {
   t.equal(counter, 4);
 });
 
+test('state.state(condition, { refresh })', function (t) {
+  t.plan(1);
+
+  var size = { width: 90 };
+  var width = new Statum(function() { return size.width; });
+
+  var counter = 0;
+  width.state(is.lt(100), { refresh: function() { counter++; } });
+
+  size.width = 110; width.refresh();
+  size.width = 105; width.refresh();
+  size.width = 90; width.refresh();
+  size.width = 110; width.refresh();
+
+  t.equal(counter, 5);
+});
+
 test('state.state(condition, enter, exit)', function (t) {
   t.plan(1);
 
@@ -157,7 +174,6 @@ test('state.state(condition, enter, exit)', function (t) {
 
   t.equal(counter, 22);
 });
-
 
 test('state.off(condition, cb)', function (t) {
   t.plan(2);
